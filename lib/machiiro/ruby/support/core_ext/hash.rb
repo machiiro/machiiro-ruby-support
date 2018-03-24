@@ -1,0 +1,37 @@
+class Hash
+  def as_time(name, format)
+    return nil if self[name].nil?
+
+    begin
+      return Time.strptime(self[name], format)
+    rescue ArgumentError
+      return nil
+    end
+  end
+
+  def sort_key
+    Hash[sort]
+  end
+
+  def extract(*names)
+    result = {}
+    names.each do |name|
+      result[name] = self[name.to_sym] unless self[name.to_sym].nil?
+    end
+    result
+  end
+
+  def trim
+    keys.each_with_object({}) do |k, h|
+      v = self[k]
+
+      h[k] = if v.is_a?(String)
+               v.strip
+             elsif v.is_a?(Hash)
+               v.trim
+             else
+               v
+             end
+    end
+  end
+end
