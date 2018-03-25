@@ -5,7 +5,7 @@ require "machiiro/ruby/support/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "machiiro-ruby-support"
-  spec.version       = Machiiro::Ruby::Support::VERSION
+  spec.version       = MachiiroSupport::VERSION
   spec.authors       = ["machiiro"]
   spec.email         = ["xxxx@machiiro.jp"]
 
@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency 'activesupport'
+  spec.add_runtime_dependency 'activerecord'
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

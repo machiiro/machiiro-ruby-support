@@ -1,5 +1,5 @@
-RSpec.describe Machiiro::Ruby::Support do
+RSpec.describe MachiiroSupport do
   it "has a version number" do
-    expect(Machiiro::Ruby::Support::VERSION).not_to be nil
+    expect(MachiiroSupport::VERSION).not_to be nil
   end
 end
