@@ -5,8 +5,14 @@ class Module
     names.each do |name|
       define_method(name) do
         v = read_attribute(name)
-        return v if v.is_a?(HashWithIndifferentAccess)
-        HashWithIndifferentAccess.new(v)
+
+        if v.is_a?(Hash)
+          return HashWithIndifferentAccess.new(v)
+        elsif v.is_a?(Array)
+          return v.map { |e| e.is_a?(Hash) ? HashWithIndifferentAccess.new(e) : e }
+        end
+
+        v
       end
     end
   end
