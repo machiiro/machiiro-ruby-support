@@ -34,4 +34,12 @@ class Hash
              end
     end
   end
+
+  def delete_recursive(name)
+    keys.each do |key|
+      delete(key) if key.to_s.include?(name.to_s)
+
+      self[key].delete_recursive(name) if self[key].is_a?(Hash)
+    end
+  end
 end
