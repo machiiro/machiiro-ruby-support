@@ -35,6 +35,10 @@ class Hash
     end
   end
 
+  def delete_keys(*keys)
+    keys.each { |k| delete(k) }
+  end
+
   def delete_recursive(name)
     keys.each do |key|
       delete(key) if key.to_s.include?(name.to_s)

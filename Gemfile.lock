@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    machiiro-ruby-support (0.1.4)
+    machiiro-ruby-support (0.1.5)
       activerecord
       activesupport
 
