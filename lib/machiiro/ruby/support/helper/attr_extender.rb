@@ -34,11 +34,11 @@ module MachiiroSupport
       end
 
       def enum_fields
-        @enum_fields
+        @enum_fields || {}
       end
 
       def enum_class(name)
-        @enum_fields[name]
+        enum_fields[name]
       end
 
       def attr_enum_fields(*fields)
