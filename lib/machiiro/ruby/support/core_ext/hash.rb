@@ -16,7 +16,7 @@ class Hash
   def extract(*names)
     result = {}
     names.each do |name|
-      result[name] = self[name.to_sym] unless self[name.to_sym].nil?
+      result[name] = self[name.to_sym] if key?(name.to_sym)
     end
     result
   end
