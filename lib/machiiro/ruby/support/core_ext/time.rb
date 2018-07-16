@@ -50,4 +50,12 @@ class Time
   def next_end_of_month(month)
     (at_beginning_of_month + month.month).at_end_of_month
   end
+
+  def to_jst
+    to_timezone('Asia/Tokyo')
+  end
+
+  def to_timezone(zone)
+    Time.zone.at(to_i).in_time_zone(zone)
+  end
 end
