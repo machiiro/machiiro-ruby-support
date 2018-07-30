@@ -9,7 +9,18 @@ module MachiiroSupport
 
       def enums_ordinal(*enums)
         @type = :ordinal
-        @enums = enums.map.with_index { |e, i| OpenStruct.new(key: i + 1, name: e, lower_name: e.downcase) }
+        @enums = enums.map.with_index do |e, i|
+          hash = { key: i + 1, order: i }
+          if e.is_a?(Array)
+            hash[:name] = e.first
+            hash.merge!(e.second || {})
+          else
+            hash[:name] = e
+          end
+          hash[:lower_name] = hash[:name].downcase
+
+          OpenStruct.new(hash)
+        end
         @enums_names = Hash[@enums.map { |e| [e.name, e] }]
       end
 
