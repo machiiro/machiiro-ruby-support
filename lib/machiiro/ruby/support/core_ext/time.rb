@@ -55,6 +55,10 @@ class Time
     to_timezone('Asia/Tokyo')
   end
 
+  def to_utc
+    to_timezone('UTC')
+  end
+
   def to_timezone(zone)
     Time.zone.at(to_i).in_time_zone(zone)
   end
