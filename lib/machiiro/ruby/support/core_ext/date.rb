@@ -18,10 +18,14 @@ class Date
   def next_end_of_month(month)
     (at_beginning_of_month + month.month).at_end_of_month
   end
-  
+
   def self.parse_period(period)
     year = period.to_s[0, 4].to_i
     month = period.to_s[4, 2].to_i
     Date.new(year, month, 1)
+  end
+
+  def self.today_at_jst
+    Time.now.to_jst.to_date
   end
 end
