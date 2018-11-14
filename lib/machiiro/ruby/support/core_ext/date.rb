@@ -19,6 +19,12 @@ class Date
     (at_beginning_of_month + month.month).at_end_of_month
   end
 
+  def self.parse_safe(value)
+    Date.parse(value.to_s)
+  rescue ArgumentError
+    nil
+  end
+
   def self.parse_period(period)
     year = period.to_s[0, 4].to_i
     month = period.to_s[4, 2].to_i
