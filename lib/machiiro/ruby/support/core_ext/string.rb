@@ -34,6 +34,10 @@ class String
     tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
   end
 
+  def kana_half
+    NKF.nkf('-w -x -Z4', self).tr('　', ' ')
+  end
+
   def nl2br
     gsub("\n", '<br />')
   end
@@ -44,10 +48,6 @@ class String
 
   def hyphencase
     underscore.tr('_', '-')
-  end
-
-  def kana_half
-    NKF.nkf('-w -x -Z4', self)
   end
 
   def colorize(name)
