@@ -46,6 +46,10 @@ class String
     underscore.tr('_', '-')
   end
 
+  def kana_half
+    NKF.nkf('-w -x -Z4', self)
+  end
+
   def colorize(name)
     return self if name.nil?
     "\e[#{COLORS[name]}m#{self}\e[0m"
