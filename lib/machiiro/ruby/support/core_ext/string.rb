@@ -38,6 +38,19 @@ class String
     NKF.nkf('-w -x -Z4', self).tr('　', ' ')
   end
 
+  def kana_half_up
+    s = kana_half
+    s.tr('ｧ', 'ｱ')
+     .tr('ｨ', 'ｲ')
+     .tr('ｩ', 'ｳ')
+     .tr('ｪ', 'ｴ')
+     .tr('ｫ', 'ｵ')
+     .tr('ｯ', 'ﾂ')
+     .tr('ｬ', 'ﾔ')
+     .tr('ｭ', 'ﾕ')
+     .tr('ｮ', 'ﾖ')
+  end
+
   def nl2br
     gsub("\n", '<br />')
   end
