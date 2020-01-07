@@ -39,7 +39,7 @@ class String
   end
 
   def kana_half_up
-    s = kana_half
+    s = kana_half.upcase
     s.tr('ｧ', 'ｱ')
      .tr('ｨ', 'ｲ')
      .tr('ｩ', 'ｳ')
