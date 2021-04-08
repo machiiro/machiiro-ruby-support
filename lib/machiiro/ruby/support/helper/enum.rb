@@ -7,9 +7,9 @@ module MachiiroSupport
     module ClassMethods
       attr_reader :type, :enums, :enums_names
 
-      def enums_ordinal(*enums)
+      def enums_ordinal(*_enums)
         @type = :ordinal
-        @enums = enums.map.with_index do |e, i|
+        @enums = _enums.map.with_index do |e, i|
           hash = { key: i + 1, order: i }
           if e.is_a?(Array)
             hash[:name] = e.first
@@ -18,15 +18,16 @@ module MachiiroSupport
             hash[:name] = e
           end
           hash[:lower_name] = hash[:name].downcase
+          hash = add_judgement_items(_enums, e, hash)
 
           OpenStruct.new(hash)
         end
         @enums_names = Hash[@enums.map { |e| [e.name, e] }]
       end
 
-      def enums_string(*enums)
+      def enums_string(*_enums)
         @type = :string
-        @enums = enums.map.with_index do |e, i|
+        @enums = _enums.map.with_index do |e, i|
           hash = { order: i }
           if e.is_a?(Array)
             hash[:name] = e.first
@@ -36,6 +37,7 @@ module MachiiroSupport
           end
           hash[:key] = hash[:name].to_s
           hash[:lower_name] = hash[:name].downcase
+          hash = add_judgement_items(_enums, e, hash)
 
           OpenStruct.new(hash)
         end
@@ -71,6 +73,22 @@ module MachiiroSupport
 
       def index_of(key)
         values.index { |v| v.key == key }
+      end
+
+      private
+
+      def add_judgement_items(_enums, e, hash)
+        _enums.each do |_e|
+          if _e.is_a?(Array)
+            name = _e.first
+          else
+            name = _e
+          end
+
+          hash["#{name.downcase}?"] = _e == e
+        end
+
+        hash
       end
     end
   end
