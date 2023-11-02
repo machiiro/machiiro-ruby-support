@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    machiiro-ruby-support (0.1.9)
+    machiiro-ruby-support (0.2.0)
       activerecord (~> 6.1)
       activesupport (~> 6.1)
 
@@ -24,7 +24,7 @@ GEM
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     minitest (5.20.0)
-    rake (10.5.0)
+    rake (13.1.0)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -46,9 +46,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.1)
+  bundler (~> 2.2)
   machiiro-ruby-support!
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
