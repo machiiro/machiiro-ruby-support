@@ -51,6 +51,7 @@ module MachiiroSupport
           super
         end
       end
+      ruby2_keywords(:method_missing) if respond_to?(:ruby2_keywords, true)
 
       def ordinal?
         @type == :ordinal
@@ -85,7 +86,9 @@ module MachiiroSupport
             name = _e
           end
 
-          hash["#{name.downcase}?"] = _e == e
+          q_method = "#{name.downcase}?"
+          q_method = "_#{q_method}" if OpenStruct.method_defined?(q_method)
+          hash[q_method] = _e == e
         end
 
         hash

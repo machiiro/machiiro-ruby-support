@@ -1,12 +1,12 @@
 class Array
   def to_h_key(key)
-    map do |e|
+    each_with_object({}) do |e, hash|
       if e.is_a?(Hash)
-        [e[key.to_sym], e]
+        hash[e[key.to_sym]] = e
       else
-        [e.send(key.to_sym), e]
+        hash[e.send(key.to_sym)] = e
       end
-    end.to_h
+    end
   end
 
   def to_h_array_key(key)
