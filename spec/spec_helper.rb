@@ -1,4 +1,10 @@
 require "bundler/setup"
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'vendor/'
+  add_filter 'spec/'
+end
+
 require "machiiro/ruby/support"
 
 RSpec.configure do |config|

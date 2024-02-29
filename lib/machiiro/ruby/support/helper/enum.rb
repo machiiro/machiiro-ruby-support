@@ -18,9 +18,9 @@ module MachiiroSupport
             hash[:name] = e
           end
           hash[:lower_name] = hash[:name].downcase
-          hash = add_judgement_items(_enums, e, hash)
+          hash = add_inquirer(_enums, e, hash)
 
-          OpenStruct.new(hash)
+          Entry.new self, hash
         end
         @enums_names = Hash[@enums.map { |e| [e.name, e] }]
       end
@@ -37,21 +37,24 @@ module MachiiroSupport
           end
           hash[:key] = hash[:name].to_s
           hash[:lower_name] = hash[:name].downcase
-          hash = add_judgement_items(_enums, e, hash)
+          hash = add_inquirer(_enums, e, hash)
 
-          OpenStruct.new(hash)
+          Entry.new self, hash
         end
         @enums_names = Hash[@enums.map { |e| [e.name, e] }]
       end
 
       def method_missing(name, *args)
-        if !args.present? && enums_names[name.to_sym]
-          enums_names[name.to_sym]
+        if !args.present? && enums_names[name]
+          enums_names[name]
         else
           super
         end
       end
-      ruby2_keywords(:method_missing) if respond_to?(:ruby2_keywords, true)
+
+      def respond_to_missing?(name, include_private = false)
+        enums_names.key?(name) || super
+      end
 
       def ordinal?
         @type == :ordinal
@@ -78,20 +81,59 @@ module MachiiroSupport
 
       private
 
-      def add_judgement_items(_enums, e, hash)
+      def add_inquirer(_enums, e, hash)
         _enums.each do |_e|
-          if _e.is_a?(Array)
-            name = _e.first
-          else
-            name = _e
-          end
-
-          q_method = "#{name.downcase}?"
-          q_method = "_#{q_method}" if OpenStruct.method_defined?(q_method)
-          hash[q_method] = _e == e
+          name = _e.is_a?(Array) ? _e.first : _e
+          hash["#{name.downcase}?".to_sym] = _e == e if name
         end
 
         hash
+      end
+    end
+
+    class Entry
+      def initialize(namespace, hash)
+        @namespace = namespace
+        @hash = hash
+      end
+
+      def ==(other)
+        if other.is_a?(self.class)
+          key == other.key && order == other.order && name == other.name
+        else
+          false
+        end
+      end
+      alias eql? ==
+      alias equal? ==
+      alias === ==
+
+      def hash
+        "#{key}:#{order}:#{name}".hash
+      end
+
+      def as_json(*)
+        @hash.as_json(only: %i[key name order lower_name])
+      end
+
+      def to_json(*)
+        as_json.to_json
+      end
+
+      def to_h
+        @hash
+      end
+
+      def method_missing(name, *args)
+        if @hash.key?(name)
+          @hash[name]
+        else
+          super
+        end
+      end
+
+      def respond_to_missing?(name, include_private = false)
+        @hash.key?(name) || super
       end
     end
   end
