@@ -277,4 +277,44 @@ RSpec.describe MachiiroSupport::Enum do
       end
     end
   end
+
+  describe 'The same method as the key in Hash is already defined' do
+    let(:enum1) do
+      Module.new do
+        include MachiiroSupport::Enum
+
+        enums_string :BLANK,
+                     :ZERO,
+                     :PRESENT
+      end
+    end
+
+    it "methods defined in enums are not prioritized, which means that `method_missing` is not called" do
+      aggregate_failures do
+        expect(enum1.BLANK.key).to eq 'BLANK'
+        expect(enum1.BLANK.order).to eq 0
+        expect(enum1.BLANK.name).to eq :BLANK
+        expect(enum1.BLANK.instance_variable_get(:@namespace)).to eq enum1
+        expect(enum1.BLANK.blank?).to eq false
+        expect(enum1.BLANK.zero?).to eq false
+        expect(enum1.BLANK.present?).to eq true
+
+        expect(enum1.ZERO.key).to eq 'ZERO'
+        expect(enum1.ZERO.order).to eq 1
+        expect(enum1.ZERO.name).to eq :ZERO
+        expect(enum1.ZERO.instance_variable_get(:@namespace)).to eq enum1
+        expect(enum1.ZERO.blank?).to eq false
+        expect(enum1.ZERO.zero?).to eq true
+        expect(enum1.ZERO.present?).to eq true
+
+        expect(enum1.PRESENT.key).to eq 'PRESENT'
+        expect(enum1.PRESENT.order).to eq 2
+        expect(enum1.PRESENT.name).to eq :PRESENT
+        expect(enum1.PRESENT.instance_variable_get(:@namespace)).to eq enum1
+        expect(enum1.PRESENT.blank?).to eq false
+        expect(enum1.PRESENT.zero?).to eq false
+        expect(enum1.PRESENT.present?).to eq true
+      end
+    end
+  end
 end
