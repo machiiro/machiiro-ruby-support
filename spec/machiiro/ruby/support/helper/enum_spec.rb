@@ -142,16 +142,6 @@ RSpec.describe MachiiroSupport::Enum do
         end
       end
 
-      let(:enum2) do
-        Module.new do
-          include MachiiroSupport::Enum
-
-          enums_ordinal [:AUTO, label: ''],
-                        [:ENTRY, label: '入館'],
-                        [:EXIT, label: '退館']
-        end
-      end
-
       it "each enumerated type can be accessed" do
         aggregate_failures do
           expect(enum1.AUTO.key).to eq 1
