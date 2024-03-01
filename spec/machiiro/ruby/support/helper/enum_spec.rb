@@ -270,15 +270,6 @@ RSpec.describe MachiiroSupport::Enum do
         end
       end
 
-      let(:enum2) do
-        Module.new do
-          include MachiiroSupport::Enum
-
-          enums_string [:ADMIN, settings_key: :admin],
-                       [:FRONT, settings_key: :front]
-        end
-      end
-
       it "each enumerated type can be accessed" do
         aggregate_failures do
           expect(enum1.ADMIN.key).to eq 'ADMIN'
