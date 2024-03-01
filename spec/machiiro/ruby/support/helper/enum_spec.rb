@@ -55,9 +55,9 @@ RSpec.describe MachiiroSupport::Enum do
 
     it "`as_json` method of each enumerated type returns Hash" do
       aggregate_failures do
-        expect(enum1.AUTO.as_json).to eq({ 'key' => 1, 'order' => 0, 'name' => 'AUTO', 'lower_name' => 'auto' })
-        expect(enum1.ENTRY.as_json).to eq({ 'key' => 2, 'order' => 1, 'name' => 'ENTRY', 'lower_name' => 'entry' })
-        expect(enum1.EXIT.as_json).to eq({ 'key' => 3, 'order' => 2, 'name' => 'EXIT', 'lower_name' => 'exit' })
+        expect(enum1.AUTO.as_json).to eq({ 'key' => 1, 'order' => 0, 'name' => 'AUTO', 'lower_name' => 'auto', 'auto?' => true, 'entry?' => false, 'exit?' => false })
+        expect(enum1.ENTRY.as_json).to eq({ 'key' => 2, 'order' => 1, 'name' => 'ENTRY', 'lower_name' => 'entry', 'auto?' => false, 'entry?' => true, 'exit?' => false })
+        expect(enum1.EXIT.as_json).to eq({ 'key' => 3, 'order' => 2, 'name' => 'EXIT', 'lower_name' => 'exit', 'auto?' => false, 'entry?' => false, 'exit?' => true })
       end
     end
 

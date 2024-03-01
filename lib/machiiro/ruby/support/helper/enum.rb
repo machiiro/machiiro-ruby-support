@@ -113,7 +113,7 @@ module MachiiroSupport
       end
 
       def as_json(*)
-        @hash.as_json(only: %i[key name order lower_name])
+        @hash.as_json
       end
 
       def to_json(*)
