@@ -28,14 +28,14 @@ module MachiiroSupport
 
       def enums_ordinal(*enums)
         @type = :ordinal
-        enums.map.with_index do |e, i|
+        enums.each_with_index do |e, i|
           define_entry!(enums, e, key: i + 1, order: i)
         end
       end
 
       def enums_string(*enums)
         @type = :string
-        enums.map.with_index do |e, i|
+        enums.each_with_index do |e, i|
           define_entry!(enums, e, order: i)
         end
       end
