@@ -67,7 +67,7 @@ module MachiiroSupport
       end
 
       def has?(name)
-        names.include?(name)
+        names.include?(name.to_sym)
       end
 
       private
@@ -87,7 +87,7 @@ module MachiiroSupport
         # add inquirer method of enum such as `admin?`
         add_inquirer!(enums, e, hash)
 
-        names << name
+        names << name.to_sym
 
         # ex) :CONST_NAME -> "ConstName"
         clazz_name = name.to_s.underscore.camelize
