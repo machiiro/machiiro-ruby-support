@@ -3,7 +3,7 @@
 module MachiiroSupport
   module Enum
     def self.included(base)
-      base.extend(ClassMethods)
+      base.extend ClassMethods
     end
 
     module Helper
@@ -29,14 +29,14 @@ module MachiiroSupport
       def enums_ordinal(*enums)
         @type = :ordinal
         enums.each_with_index do |e, i|
-          define_entry!(enums, e, key: i + 1, order: i)
+          define_entry! enums, e, key: i + 1, order: i
         end
       end
 
       def enums_string(*enums)
         @type = :string
         enums.each_with_index do |e, i|
-          define_entry!(enums, e, order: i)
+          define_entry! enums, e, order: i
         end
       end
 
@@ -63,7 +63,7 @@ module MachiiroSupport
       end
 
       def has?(name)
-        names.include?(name.to_sym)
+        names.include? name.to_sym
       end
 
       private
@@ -88,7 +88,7 @@ module MachiiroSupport
         key ||= name.to_s
 
         # add inquirer method of enum such as `admin?`
-        add_inquirer!(enums, e, hash)
+        add_inquirer! enums, e, hash
 
         names << name.to_sym
 
@@ -103,26 +103,24 @@ module MachiiroSupport
 
             next if method_defined?(k)
 
-            ivar = generate_ivar_name(k)
+            ivar = generate_ivar_name k
 
-            define_method(k) do
+            define_method k do
               # set value to instance variable for Entry#to_h
               instance_variable_set(ivar, v.respond_to?(:call) ? v.call : v)
             end
           end
         end
 
-        const_set(clazz_name, clazz)
+        const_set clazz_name, clazz
 
-        entry = clazz.new(key: key, order: order, name: name)
+        entry = clazz.new key: key, order: order, name: name
 
         # prohibit to create instance of Entry
-        clazz.class_eval do
-          private_class_method :new
-        end
+        clazz.private_class_method :new
 
         # define method to access Entry instance
-        define_singleton_method(name) do
+        define_singleton_method name do
           entry
         end
       end
@@ -186,16 +184,18 @@ module MachiiroSupport
 
       def to_h
         self.class.members.each_with_object({}) do |member, h|
-          ivar = generate_ivar_name(member)
+          ivar = generate_ivar_name member
 
           h[member] =
             if instance_variable_defined?(ivar)
-              instance_variable_get(ivar)
+              instance_variable_get ivar
             else
               send member
             end
         end
       end
     end
+
+    private_constant :Entry
   end
 end
