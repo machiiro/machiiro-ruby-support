@@ -49,17 +49,13 @@ module MachiiroSupport
       end
 
       def values
-        @values ||= names.each_with_object([]) do |name, entries|
-          entries << public_send(name)
-        end
+        indexes.values
       end
       alias enums values
 
       def value_of(key)
         key = key.to_i if ordinal?
-        values.find do |v|
-          v.key == key
-        end
+        indexes[key]
       end
 
       def index_of(key)
@@ -71,6 +67,13 @@ module MachiiroSupport
       end
 
       private
+
+      def indexes
+        @indexes ||= names.each_with_object({}) do |name, indexes|
+          entry = public_send name
+          indexes[entry.key] = entry
+        end
+      end
 
       def define_entry!(enums, e, order:, key: nil)
         hash = {}
