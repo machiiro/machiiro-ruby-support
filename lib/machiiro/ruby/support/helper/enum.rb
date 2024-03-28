@@ -197,7 +197,5 @@ module MachiiroSupport
         end
       end
     end
-
-    private_constant :Entry
   end
 end
