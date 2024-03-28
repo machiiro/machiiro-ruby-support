@@ -10,7 +10,7 @@ module MachiiroSupport
       private
 
       def generate_ivar_name(name)
-        name = name.to_s.gsub("-", "_")
+        name = name.to_s.underscore
 
         if name.end_with?('?')
           # ex) admin? -> @__admin
