@@ -79,7 +79,7 @@ class String
 
   def eval_erb(vars = {})
     b = OpenStruct.new(vars).instance_eval { binding }
-    ERB.new(self, nil, '-').result(b)
+    ERB.new(self, trim_mode: '-').result(b)
   end
 
   def eval_formula(vars = {})
