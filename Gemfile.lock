@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     machiiro-ruby-support (0.3.0)
-      activerecord (~> 6.1)
-      activesupport (~> 6.1)
+      activerecord
+      activesupport
 
 GEM
   remote: https://rubygems.org/
