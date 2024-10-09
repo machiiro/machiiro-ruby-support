@@ -8,14 +8,17 @@ module MachiiroSupport
     def provide(name, *args)
       provider.provide(name, *args)
     end
+    ruby2_keywords(:provide) if respond_to?(:ruby2_keywords, true)
 
     def repository(name, *args)
       provide("#{name}_repository".to_sym, *args)
     end
+    ruby2_keywords(:repository) if respond_to?(:ruby2_keywords, true)
 
     def translator(name, *args)
       provide("#{name}_translator".to_sym, *args)
     end
+    ruby2_keywords(:translator) if respond_to?(:ruby2_keywords, true)
 
     class Provider
       attr_accessor :observer
@@ -34,6 +37,7 @@ module MachiiroSupport
           ModuleProxy.new(super, observer)
         end
       end
+      ruby2_keywords(:provide) if respond_to?(:ruby2_keywords, true)
 
       def register(clazz, value)
         @modules[clazz.name.demodulize.underscore.to_sym] = value
@@ -51,6 +55,7 @@ module MachiiroSupport
         @observer.observe(@mod, name, value) if @observer.present?
         value
       end
+      ruby2_keywords(:method_missing) if respond_to?(:ruby2_keywords, true)
     end
   end
 end
