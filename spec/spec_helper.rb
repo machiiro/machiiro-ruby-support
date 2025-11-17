@@ -5,7 +5,12 @@ SimpleCov.start do
   add_filter 'spec/'
 end
 
+require 'active_support/time'
+require 'active_support/time_with_zone'
+require 'active_support/testing/time_helpers'
 require "machiiro/ruby/support"
+
+Time.zone = 'Asia/Tokyo'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -17,4 +22,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include ActiveSupport::Testing::TimeHelpers
 end
