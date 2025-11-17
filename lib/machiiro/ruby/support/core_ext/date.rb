@@ -57,6 +57,6 @@ class Date
   # NOTE: This method does not check the format of the target.
   def self.period_format?(target)
     return false if target.nil?
-    target.to_s =~ /\A\d{6}\z/ ? true : false
+    target.to_s.match?(/\A\d{6}\z/)
   end
 end
